@@ -9,7 +9,19 @@
 <body>
     <h1>Asynchronous JavaScript</h1>
     <script>
-        
+        const asyncFunction = () => {
+            setTimeout(() => {
+                console.log('...Hello, I\'m an async function, late to the party 😳');
+            }, 3000); //milliseconds
+        }
+
+        const regularFunction = () => {
+            console.log('Hello - I\'m a regular fuction!');
+            asyncFunction();
+            console.log('The end');
+        }
+
+        regularFunction();
     </script>
 </body>
 </html>
