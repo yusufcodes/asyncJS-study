@@ -57,9 +57,120 @@
                 }, 1500, recipeID[2]);
             }, 1500);
         }
+        getRecipe();
         */
 
-        getRecipe();
+        /* Three: Promises
+        Promises allow for you to define some sort of action to be executed, based on whether a certain event has
+        taken place or not. You're able to anticipate some 'future value', defining the logic to handle such value once it arrives.
+        This method of Asynchronous JavaScript eliminates the problem with callback hell, newly introduced in ES6.
+        Promise States: Defines the outcome of a promise, and can be used to handle such outcomes.
+        Pending - before the event happens
+        Settled/Resolved - after the event has happened
+         -> Result available: Promise is Fulfilled
+         -> Result not available: Promise is Rejected
+        */
+
+        /* The Structure of a Promise */
+        /* 
+        The new keyword is used to create a new instance of the Promise object, passing in a function with the arguments
+        resolve and reject. We call this function the Executor Function.
+        The way that the Promise has been designed allows for this executor code to run instantly, and within this function,
+        we can call the resolve and reject functions which will either 'resolve' the promise - meaning a value has been retrieved
+        by the executor function which we can return, or 'reject' the promise - in the event of some kind of error.
+        */
+        const example = new Promise( (resolve, reject) =>
+        {
+            // Executor Function code
+        });
+
+        /* Promise Definition */
+        // Creating a promise with an executor function, defining what data should be returned upon resolved function (timer finishes)
+        const getIDs = new Promise((resolve, reject) => {
+            setTimeout( () => {
+                resolve([45, 65, 24, 25, 69]);
+            }, 1500);
+        });
+
+        // Creating a function which returns a resolved Promise object, with the recipe we want.
+        const getRecipe = recID => {
+            return new Promise((resolve, reject) => {
+                setTimeout(ID => {
+                    const recipe = {title : 'Pasta', publisher: 'Yusuf'};
+                    resolve(`${ID} : ${recipe.title}`);
+                }, 1500, recID);
+            });
+        };
+
+        const getRelated = publisher => {
+            return new Promise((resolve, reject) => {
+                setTimeout(publisher => {
+                    const relatedRecipe = {title: 'Pizza', publisher: 'Yusuf'};
+                    resolve(`${publisher} : ${relatedRecipe.title}`);
+                }, 1500, publisher);
+            });
+        };
+
+        /* Promise Consumption (no async/await)*/
+        // Define what to do when the promise is resolved using a callback function
+        /*
+        getIDs
+        .then(IDs => {
+            // Print out the IDs, then return a *New Promise*
+            console.log(IDs);
+            return getRecipe(IDs[2]);
+        })
+        // Chaining the next then() method to the returned Promise from getRecipe
+        .then(recipe => {
+            console.log(recipe);
+            return getRelated('Yusuf');
+        })
+        .then(relatedRecipe => {
+            console.log(relatedRecipe);
+        })
+        .catch(error => {
+            console.log('Error');
+        });
+        */
+        // .then() - resolved promises, .catch() - rejected promises
+
+        /* async/await - designed to help in the consumption of Promises */
+        async function getRecipesAW()
+        {
+            // Consuming the getIDs Promise
+            const IDs = await getIDs;
+            console.log(IDs);
+
+            const recipe = await getRecipe(IDs[2]);
+            console.log(recipe);
+
+            const related = await getRelated('Yusuf');
+            console.log(related);
+        }
+
+        // getRecipesAW();
+
+        /* Async functions always return a Promise. We can use this fact to do something with the result of 
+        a Promise. I have written 'newGetRecipesAW' to demonstrate this. */
+        async function newGetRecipesAW()
+        {
+            // Consuming the getIDs Promise
+            const IDs = await getIDs;
+            console.log(IDs);
+            const recipe = await getRecipe(IDs[2]);
+            console.log(recipe);
+            return recipe;
+        }
+
+        // Using the then() method on the returned promise, simply console logging the result.
+        newGetRecipesAW().then(result => console.log(`${result} is the best ever!`));
+
+        /* AJAX Calls with Fetch and Promise */
+        fetch('https://www.metaweather.com/api/location/2487956');
+
+        
+
+        
     </script>
 </body>
 </html>

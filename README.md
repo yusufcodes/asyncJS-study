@@ -121,3 +121,14 @@ All of the above actions are kept in sync with **The Event Loop**: a part of the
 And that just about covers the concept of Asynchronous JavaScript (at a basic level)! 
 
 ## Asynchronous JavaScript with Callbacks
+
+## TODO: Fill in sections about Callbacks, Promises and Async / Await. Currently have comments in my code (asynchronous.html) which I want to transfer here in a more readable format.
+
+## AJAX and APIs
+
+AJAX = Asynchronous JavaScript and XML
+
+API = Application Programming Interface
+Some kind of software to be used by other pieces of software, allowing for them to talk to each other.
+
+## Making AJAX calls with Fetch and Promises
