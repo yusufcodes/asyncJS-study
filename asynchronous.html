@@ -163,14 +163,58 @@
         }
 
         // Using the then() method on the returned promise, simply console logging the result.
-        newGetRecipesAW().then(result => console.log(`${result} is the best ever!`));
+        // newGetRecipesAW().then(result => console.log(`${result} is the best ever!`));
 
         /* AJAX Calls with Fetch and Promise */
-        fetch('https://www.metaweather.com/api/location/2487956');
+        const getWeatherInfo = woeid =>
+        {
+            // fetch(): Returns a Promise to be consumed 
+            fetch(`https://www.metaweather.com/api/location/${woeid}`)
+            .then(result => {
+                console.log(result);
 
-        
+                // JavaScript Object -> JSON
+                // Promise is returned from the json()
+                return result.json();
+            })
+            .then(data => {
+                // Retrieving data from JSON and displaying to the console
+                const today = data.consolidated_weather[0];
+                console.log(`Temperatures in ${data.title} stay between ${today.min_temp} and ${today.max_temp}`);
+            })
+            .catch(error => console.log(error));
+        };
 
-        
+        // getWeatherInfo(28218);
+
+        /* AJAX Calls with Fetch and Async / Await */
+        // Reminder: Async functions always return a Promise
+        const getWeatherAW = async woeid => {
+            try
+            {
+                const result = await fetch(`https://www.metaweather.com/api/location/${woeid}`);
+                const data = await result.json();
+                //console.log(data);
+                const tomorrow = data.consolidated_weather[1];
+                console.log(`Temperatures in ${data.title} stay between ${tomorrow.min_temp} and ${tomorrow.max_temp}`);
+
+                return data;
+            } catch(error) {
+                console.log(error);
+            }
+        }
+
+        // Executing getWeather for Manchester
+        getWeatherAW(28218);
+
+        let dataLondon = '';
+
+        // Using the returned Promise from getWeatherAW to store the data in dataLondon
+        getWeatherAW(44418).then(data => {
+            dataLondon = data;
+            console.log(dataLondon);
+        });
+
     </script>
 </body>
 </html>
