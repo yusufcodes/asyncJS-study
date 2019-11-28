@@ -143,7 +143,7 @@ The important thing to note with a Promise is that we are interested in being ab
 
 ## Async / Await
 
-[Add MDN link here]
+Reference: [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await)
 
 ### The Async Keyword - returning Promises
 
