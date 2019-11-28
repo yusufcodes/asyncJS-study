@@ -122,7 +122,7 @@ And that just about covers the concept of Asynchronous JavaScript (at a basic le
 
 ## Asynchronous JavaScript with Callbacks
 
-## TODO: Fill in sections about Callbacks, Promises and Async / Await. Currently have comments in my code (asynchronous.html) which I want to transfer here in a more readable format.
+A callback is a function which we want to run under a particular action or condition being met. This can be passed into other functions, for example, the setTimeout function. In the context of using setTimeout, we can run a function once the time limit set has been reached.
 
 ## AJAX and APIs
 
@@ -131,4 +131,43 @@ AJAX = Asynchronous JavaScript and XML
 API = Application Programming Interface
 Some kind of software to be used by other pieces of software, allowing for them to talk to each other.
 
-## Making AJAX calls with Fetch and Promises
+## Promises
+
+Note: The notes written below are a summation of this Mozilla Developer Network guide, in my own words: [Graceful asynchronous programming with Promises](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Promises)
+
+A Promise allows for you to wait for a particular action to finish, before performing some other action. This 'other action' could be handling either the success or failure of the previous action that is defined.
+
+Promises are an object which represents the **state of an operation**. It can be thought of as an actual promise, that some kind of result will be returned in the future. We don't know when the operation will be complete, but we do know that code will be executed once a result is available.
+
+The important thing to note with a Promise is that we are interested in being able to actually do something with the result that is returned - this can be done through the consumption of Promises.
+
+## Async / Await
+
+[Add MDN link here]
+
+### The Async Keyword - returning Promises
+
+The async keyword is placed at the beginning of function declarations to turn it into an async function.
+This async function will support the use of the await keyword, turning the code in the function into asynchronous code.
+
+An async function will always return a Promise.
+
+#### Creating Async Functions
+
+```javascript
+// Function Declaration
+async function hello() { return "Hello" };
+
+// Function Expression
+let hello = async function() { return "Hello" };
+
+// Arrow Function
+let hello = async () => { return "Hello" };
+```
+
+These functions can then be executed and used with the .then() and .catch() methods to consume the Promise.
+
+### The Await Keyword
+
+'await' will cause the program to be paused on this particular line, to wait for the desired result, whilst allowing for the other lines of code to run in parallel to this waiting operation.
+

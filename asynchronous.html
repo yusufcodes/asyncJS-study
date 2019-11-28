@@ -9,8 +9,9 @@
 <body>
     <h1>Asynchronous JavaScript</h1>
     <script>
+        
+        // *** One ***
         /*
-        *** One ***
         const asyncFunction = () => {
             setTimeout(() => {
                 console.log('...Hello, I\'m an async function, late to the party 😳');
@@ -25,7 +26,7 @@
 
         regularFunction();
         */
-
+        
         /* Two: Callbacks */
         // Simulating fetching some data from a server for recipe information using setTimeout
         /* Multiple callbacks are used within one another to simulate the data fetching, and it can become 
@@ -33,7 +34,7 @@
         Callback functions are performed when passed into another function, which has some job to do. It is once this job is complete that
         the callback will actually run. For example, with setTimeout, the job is to wait however long we specify. We can then run the
         callback function which we passed in, using the result of the function in the callback function. */
-        /*
+        
         function getRecipe()
         {
             setTimeout( () => {
@@ -58,8 +59,7 @@
             }, 1500);
         }
         getRecipe();
-        */
-
+        
         /* Three: Promises
         Promises allow for you to define some sort of action to be executed, based on whether a certain event has
         taken place or not. You're able to anticipate some 'future value', defining the logic to handle such value once it arrives.
@@ -71,14 +71,14 @@
          -> Result not available: Promise is Rejected
         */
 
-        /* The Structure of a Promise */
-        /* 
+        /* The Structure of a Promise 
         The new keyword is used to create a new instance of the Promise object, passing in a function with the arguments
         resolve and reject. We call this function the Executor Function.
         The way that the Promise has been designed allows for this executor code to run instantly, and within this function,
         we can call the resolve and reject functions which will either 'resolve' the promise - meaning a value has been retrieved
         by the executor function which we can return, or 'reject' the promise - in the event of some kind of error.
         */
+
         const example = new Promise( (resolve, reject) =>
         {
             // Executor Function code
@@ -86,6 +86,8 @@
 
         /* Promise Definition */
         // Creating a promise with an executor function, defining what data should be returned upon resolved function (timer finishes)
+        
+        
         const getIDs = new Promise((resolve, reject) => {
             setTimeout( () => {
                 resolve([45, 65, 24, 25, 69]);
@@ -111,16 +113,18 @@
             });
         };
 
-        /* Promise Consumption (no async/await)*/
+        /* Promise Consumption (no async/await) */
         // Define what to do when the promise is resolved using a callback function
-        /*
+
         getIDs
         .then(IDs => {
             // Print out the IDs, then return a *New Promise*
             console.log(IDs);
             return getRecipe(IDs[2]);
-        })
+        });
+
         // Chaining the next then() method to the returned Promise from getRecipe
+        // .then() - resolved promises, .catch() - rejected promises
         .then(recipe => {
             console.log(recipe);
             return getRelated('Yusuf');
@@ -131,10 +135,9 @@
         .catch(error => {
             console.log('Error');
         });
-        */
-        // .then() - resolved promises, .catch() - rejected promises
+        
+        /* Promise Consumption: async/await - designed to help in the consumption of Promises */
 
-        /* async/await - designed to help in the consumption of Promises */
         async function getRecipesAW()
         {
             // Consuming the getIDs Promise
@@ -163,9 +166,9 @@
         }
 
         // Using the then() method on the returned promise, simply console logging the result.
-        // newGetRecipesAW().then(result => console.log(`${result} is the best ever!`));
+        newGetRecipesAW().then(result => console.log(`${result} is the best ever!`));
 
-        /* AJAX Calls with Fetch and Promise */
+        // AJAX Calls with Fetch and Promise
         const getWeatherInfo = woeid =>
         {
             // fetch(): Returns a Promise to be consumed 
@@ -187,7 +190,7 @@
 
         // getWeatherInfo(28218);
 
-        /* AJAX Calls with Fetch and Async / Await */
+        // AJAX Calls with Fetch and Async / Await
         // Reminder: Async functions always return a Promise
         const getWeatherAW = async woeid => {
             try
@@ -214,7 +217,31 @@
             dataLondon = data;
             console.log(dataLondon);
         });
+        
 
+        // MDN Promises Exercise
+
+        // fetch() returns a Promise which we store in the variable 'promise'
+        // When the Promise is neither a success or failure, it is in a Pending state
+        let promise = fetch('coffee.jpg');
+
+        // Invoking the .then() method lets us perform some kind of action upon a successful Promise,
+        // upon which a Response object is returned - also understood to be when a promise has been 'fulfilled'.
+        // Below, upon our first Promise completing, we run the .blob() method which transform the image into a 
+        // Blob object to allow for some operations to be done on the image.
+        // The .then() method itself will return a Promise. 
+        let promise2 = promise.then(response => response.blob());
+
+        let promise3 = promise2.then(myBlob => {
+            let objectURL = URL.createObjectURL(myBlob);
+            let image = document.createElement('img');
+            image.src = objectURL;
+            document.body.appendChild(image);
+        });
+
+        // Invoking the .catch() method allows for us to handle a failure in a Promise
+        let errorCase = promise3.catch(e => console.log(`Problem with fetch operation: ${e.message}`));
+        
     </script>
 </body>
 </html>
